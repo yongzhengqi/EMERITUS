@@ -1,32 +1,62 @@
 class Config:
     # the size of windows of skip-gram
-    window = 3
+    window = 2
 
     # the number of dimensions of features
-    dim = 50
+    dim = 200
 
     # where you saved your corpus
-    input_filename = 'input'
+    input_filename = './data/quora_questions_gbk_fixed.txt'
 
     # where you want to save the representation of your words
-    output_filename = './results/output.{}.window={}.dim={}'.format(input_filename, window, dim)
+    output_filename = './results/output.window={}.dim={}'.format(window, dim)
 
     # if a word appears less than word_min_cnt times, it will be replaced
-    word_min_cnt = 3
-
-    # the learning rate of SGD
-    learning_rate = 0.01
-
-    # the momentum for SGD
-    momentum = 0.5
+    word_min_cnt = 30
 
     # the max number of sentence used for training
-    dataset_size = 500000
+    # set to None if you want to ignore this limit
+    dataset_size = None
 
     # batch size of SGD
-    batch_size = 50
+    batch_size = 2048
 
-    # how many processes you want to create for training process
-    num_worker = 8
+    # parameter in Negative sampling
+    # see more at https://arxiv.org/abs/1301.3781
+    ng_pow = 0.75
+
+    # parameter in Negative sampling
+    # see more at https://arxiv.org/abs/1301.3781
+    ng_table_sz = 100000000
+
+    # parameter in Negative sampling
+    # see more at https://arxiv.org/abs/1301.3781
+    ng_k = 2
+
+    # if to lazy load the training set
+    saved_training_set = None  # 'data/training_set.json'
+
+    # run how many mini-batches between two updates on tensorboard
+    tb_upd_gap = 500
+
+    # run how many mini-batches between updates on saved models
+    latest_upd_gap = 5000
+
+    # the gap between check points
+    ckpt_save_gap = 10000
+
+    # max mini-batch to train
+    max_epoch = 300000
+
+    # where to save check latest models
+    latest_ckpt_dir = './results/latest'
+
+    # where to save file for testing on validation set
+    valida_ckpt_dir = './results/latest.json'
+
+    # hyper-parameter on optimizing
+    # see more at https://pytorch.org/docs/stable/optim.html#torch.optim.lr_scheduler.ReduceLROnPlateau
+    lr_adj_pat = 1e4
+
 
 config = Config()

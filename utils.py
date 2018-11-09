@@ -1,20 +1,10 @@
 import torch.nn as nn
 import torch.optim as optim
 from tqdm import tqdm
+import numpy as np
 
 from common import config
-
-
-def train(loader, net, rank):
-    criterion = nn.MSELoss()
-    optimizer = optim.SGD(net.parameters(), lr=config.learning_rate, momentum=config.momentum)
-
-    for step, (batch_x, batch_y) in enumerate(tqdm(loader, position=rank)):
-        optimizer.zero_grad()
-        output = net(batch_x)
-        loss = criterion(output, batch_y)
-        loss.backward()
-        optimizer.step()
+import json
 
 
 def save_model(words, features, filename):
@@ -28,3 +18,23 @@ def save_model(words, features, filename):
         output_file.write('\n')
 
     output_file.close()
+    print('result saved to {}'.format(filename))
+
+
+def save_features(feats, cur_epoch, tb_log_dir, word2idx):
+    word_list_file_name = 'eval/ITC/word_list.txt'
+    word_list = []
+    for idx, line in enumerate(open(word_list_file_name, 'r')):
+        word_list.append(line.strip())
+
+    feat_lst = []
+    for idx, word in enumerate(word_list):
+        if word in word2idx.keys():
+            feat_lst.append(feats[word2idx[word]])
+        else:
+            print('word \'{}\' not found...'.format(word))
+            feat_lst.append(np.random.randint(low=-1, high=1, size=config.dim))
+    feat_lst = [feat.tolist() for feat in feat_lst]
+
+    check_point = {'feats': feat_lst, 'epoch': cur_epoch, 'log_dir': tb_log_dir}
+    json.dump(check_point, open(config.valida_ckpt_dir, 'w'))

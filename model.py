@@ -4,21 +4,25 @@ import numpy as np
 
 
 class Net(nn.Module):
-    def __init__(self, vocab_len, dim):
+    def __init__(self, vocab_sz, dim):
         super(Net, self).__init__()
-        tpt = torch.Tensor(np.random.randn(vocab_len, dim))
-        self.fe_0 = nn.Parameter(tpt, requires_grad=True)
-        self.fe_1 = nn.Parameter(tpt, requires_grad=True)
+        self.fe = nn.Embedding(vocab_sz, dim)
         self.sigmoid = nn.Sigmoid()
 
     def forward(self, xs):
-        dis = torch.zeros([xs.size()[0]])
-        for idx, x in enumerate(xs):
-            fe_a = self.fe_0[int(x[0])]
-            fe_b = self.fe_1[int(x[1])]
+        fe_a = self.fe(xs[:, 0])
+        fe_b = self.fe(xs[:, 1])
 
-            dis_cur = torch.dot(fe_a, fe_b)
-            dis_cur = self.sigmoid(dis_cur)
+        dis_dot = self.batch_dot(fe_a, fe_b).view(xs.size()[0])
+        dis_cos = dis_dot / self.norm(fe_a) / self.norm(fe_b)
+        dis = (self.sigmoid(dis_cos) + 1) / 2
 
-            dis[idx] = dis_cur
         return dis
+
+    def norm(self, a):
+        return (a ** 2).sum(dim=1) ** 0.5
+
+    def batch_dot(self, a, b):
+        batch_sz = a.size()[0]
+        dim = a.size()[1]
+        return torch.bmm(a.view(batch_sz, 1, dim), b.view(batch_sz, dim, 1)).view(batch_sz)
