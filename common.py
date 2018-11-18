@@ -1,9 +1,9 @@
 class Config:
     # the size of windows of skip-gram
-    window = 2
+    window = 3
 
     # the number of dimensions of features
-    dim = 200
+    dim = 300
 
     # where you saved your corpus
     input_filename = './data/quora_questions_gbk_fixed.txt'
@@ -31,7 +31,7 @@ class Config:
 
     # parameter in Negative sampling
     # see more at https://arxiv.org/abs/1301.3781
-    ng_k = 2
+    ng_k = 5
 
     # if to lazy load the training set
     saved_training_set = None  # 'data/training_set.json'
@@ -43,7 +43,7 @@ class Config:
     latest_upd_gap = 5000
 
     # the gap between check points
-    ckpt_save_gap = 10000
+    ckpt_save_gap = 5000
 
     # max mini-batch to train
     max_epoch = 300000
@@ -57,6 +57,10 @@ class Config:
     # hyper-parameter on optimizing
     # see more at https://pytorch.org/docs/stable/optim.html#torch.optim.lr_scheduler.ReduceLROnPlateau
     lr_adj_pat = 1e4
+
+    # min learning rate
+    # see more at https://pytorch.org/docs/stable/optim.html#torch.optim.lr_scheduler.ReduceLROnPlateau
+    lr_min = 1e-5
 
 
 config = Config()

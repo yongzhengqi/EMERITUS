@@ -1,5 +1,10 @@
 # EMERITUS: MID-TERM HOMEWORK OF INTRODUCTION TO COMPUTER SCIENCE
 
+## 0. Report
+
+Please visit [https://ml.qizy.tech/wp-content/uploads/2018/11/EMERITUS.pdf](https://ml.qizy.tech/wp-content/uploads/2018/11/EMERITUS.pdf) for full report.
+![https://ml.qizy.tech/wp-content/uploads/2018/11/EMERITUS_preview.png](https://ml.qizy.tech/wp-content/uploads/2018/11/EMERITUS_preview.png)
+
 ## 1. TL;DR.
 
 ### 1.1 Before training
@@ -7,17 +12,17 @@ View `common.py` and make sure the basic setting of this project fits to your wi
 
 ### 1.2 Start training
 ```bash
-./train.py
+make train
 ```
 
 ### 1.3 Start tensorboard
 ```bash
-tensorboard --logdir ./logs
+make tb
 ```
 
 ### 1.4 Testing your models
 ```bash
-./tester.py
+make eval
 ``` 
 
 ## 2. Structure of this project

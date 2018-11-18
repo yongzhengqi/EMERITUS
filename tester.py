@@ -76,8 +76,8 @@ def get_matrix(feat_lst):
 
 
 if __name__ == "__main__":
-    word_list_file_name = 'eval/ITC/word_list.txt'
-    gold_standard_file_name = 'eval/ITC/wordsim_quora'
+    word_list_file_name = 'evaluation/ITC/word_list.txt'
+    gold_standard_file_name = 'evaluation/ITC/wordsim_quora'
 
     word_list, word2idx = read_word_list(open(word_list_file_name))
     gold_standard = read_gold_standard(open(gold_standard_file_name), word2idx)

@@ -32,7 +32,7 @@ if __name__ == '__main__':
     # specifying optimizing method
     criterion = nn.MSELoss()
     optimizer = optim.Adam(net_multi_gpu.parameters())
-    scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, patience=config.lr_adj_pat)
+    scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, patience=config.lr_adj_pat, min_lr=config.lr_min)
 
     # training
     for cur_epoch in tqdm(range(config.max_epoch), desc='training on {} GPUs...'.format(gpu_num)):

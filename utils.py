@@ -22,7 +22,7 @@ def save_model(words, features, filename):
 
 
 def save_features(feats, cur_epoch, tb_log_dir, word2idx):
-    word_list_file_name = 'eval/ITC/word_list.txt'
+    word_list_file_name = 'evaluation/ITC/word_list.txt'
     word_list = []
     for idx, line in enumerate(open(word_list_file_name, 'r')):
         word_list.append(line.strip())
