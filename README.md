@@ -7,8 +7,13 @@ Please visit [https://ml.qizy.tech/wp-content/uploads/2018/11/EMERITUS.pdf](http
 
 ## 1. TL;DR.
 
-### 1.1 Before training
+### 1.0 Before training
 View `common.py` and make sure the basic setting of this project fits to your wish.
+
+### 1.1 Get training data
+```bash
+make get data
+```
 
 ### 1.2 Start training
 ```bash
